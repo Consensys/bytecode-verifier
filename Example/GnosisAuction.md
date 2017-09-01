@@ -70,5 +70,5 @@ solc.compile(input,0)['contracts'][':MultiSigWalletWithDailyLimit']['metadata']
 
 Look carefully and compare the ABI, we saw something unusual: ** 'devdoc', 'kecaak256','bzzr'**. These metadata are compiled into our bytecode, That is why we get different result! 
 
-By default, `solc` takes all of them. The guess right now is that if we exclude them as input, the output should be the same. 
+**By default, `solc` takes all of them. The guess right now is that if we exclude them as input, the output should be the same. But currently haven't found any documentation or discussion on how to achieve that. ** 
 
