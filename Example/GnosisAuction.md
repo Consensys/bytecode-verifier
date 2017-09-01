@@ -41,6 +41,8 @@ Of course, in other cases `:contractName`depends on the actual contract name bei
 
 In our case, if nothing goes wrong, the node console should give you a string starting with `606060405234156200000d5...` and ends with `08a428862b0029`. 
 
+![compiled bytecode]('../assets/wrong_result.png')
+
 5. Now, it's time to testify the actual bytecode on the blockchain is the same as what the compiler outputs. Stay in the node console and do the following:
 ```javascript
 var Web3 = require('web3');
@@ -64,6 +66,7 @@ Since this contract has already been verifed, Etherscan.io will take you to [thi
 ```javascript
 solc.compile(input,0)['contracts'][':MultiSigWalletWithDailyLimit']['metadata']
 ```
+![metadata display]('../assets/include_dev_doc_wrong_result.png')
 Look carefully and compare the ABI, we saw something unusual: ** 'devdoc', 'kecaak256','bzzr'**. These metadata are compiled into our bytecode, That is why we get different result! 
 
 By default, `solc` takes all of them. The guess right now is that if we exclude them as input, the output should be the same. 
