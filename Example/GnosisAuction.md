@@ -67,6 +67,7 @@ Since this contract has already been verifed, Etherscan.io will take you to [thi
 solc.compile(input,0)['contracts'][':MultiSigWalletWithDailyLimit']['metadata']
 ```
 ![metadata display](../assets/include_dev_doc_wrong_result.png)
+
 Look carefully and compare the ABI, we saw something unusual: ** 'devdoc', 'kecaak256','bzzr'**. These metadata are compiled into our bytecode, That is why we get different result! 
 
 By default, `solc` takes all of them. The guess right now is that if we exclude them as input, the output should be the same. 
