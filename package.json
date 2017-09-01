@@ -1,0 +1,22 @@
+{
+  "name": "bytecode-verifier",
+  "version": "0.0.1",
+  "description": "The purpose of this tool is to verify that the Contract Source on etherscan matches the bytecode that's actually on the blockchain.  If the code shown on etherscan does not match the blockchain, the tool must display a danger sign.  The purpose of the tool is to warn people if the Contract Source information on etherscan has been tampered with.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ConsenSys/bytecode-verifier.git"
+  },
+  "author": "Alex Xiong",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ConsenSys/bytecode-verifier/issues"
+  },
+  "homepage": "https://github.com/ConsenSys/bytecode-verifier#readme",
+  "dependencies": {
+    "solc": "^0.4.10"
+  }
+}
