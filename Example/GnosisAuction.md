@@ -2,27 +2,40 @@
 
 The following process describes the steps to be automated by the verifier tool:
 
-1. Create and enter a new folder named "test_bytecode" or whatever you prefer. `mkdir test_bytecode && cd test_bytecode`. 
-Then initiate npm for a local dependency list. `npm init` (for simplicity, you could skip most of the specification e.g. 'author','licence','description'etc.)
+1. Create and enter a new folder named "test_bytecode" or whatever you prefer. 
+
+```
+mkdir test_bytecode && cd test_bytecode
+``` 
+Then initiate npm for a local dependency list. 
+```shell
+npm init
+``` 
+(for simplicity, you could skip most of the specification e.g. 'author','licence','description'etc.)
 
 2. Copy code from [etherscan](https://etherscan.io/address/0x851b7f3ab81bd8df354f0d7640efcd7288553419#code "Gnosis Auction contract code"), and paste into a empty file. Name the file `GnosisAuction.sol` or whatever filename you prefer, as long as having a `.sol` file extension. 
 
-3. Install a specified solidity compiler version at your choice using npm. In our case, we will choose to use `v0.4.10+commit.f0d539ae` , type in command: `npm install solc@v0.4.10+commit.f0d539ae --save`(By the time of writing, without specifying the version, `npm install solc` will download v0.4.16 compiler).
+3. Install a specified solidity compiler version at your choice using npm. In our case, we will choose to use `v0.4.10+commit.f0d539ae` , type in command: (By the time of writing, without specifying the version, `npm install solc` will download v0.4.16 compiler).
+```
+npm install solc@v0.4.10+commit.f0d539ae --save
+```
 
 To make sure you got the right version, two ways to verify. 
 One: go to `./package.json`, you should be able to see `"dependencies": {"solc": "^0.4.10"}` in your dependency list. 
 Two: go to node console by typing `node`, then enter the following:
+
 ```javascript
 var solc = require('solc')
 solc.version()
 ```
 you should also be able to see the result `'0.4.16+commit.d7661dd9.Emscripten.clang'`
 
-The reason why `solc.useVersion('v0.4.10+commit.f0d539ae')` is not used, which seems much easier, is that when you type in command `npm install solc@certain_version`, according `soljson-certain_version.js`are not added to `./bin/`, so the module won't be found.
+*The reason why `solc.useVersion('v0.4.10+commit.f0d539ae')` is not used, which seems much easier, is that when you type in command `npm install solc@certain_version`, according `soljson-certain_version.js`are not added to `./bin/`, so the module won't be found.*
 
 Another point to keep in mind is that, every time you try to switch to another version, install that version with `--save` to replace the current dependency entry. Then close node console(if any), and open a new one, and re-require. 
 
 4. Compile the code, enter the node console (command: `node`)
+
 ```javascript
 var solc = require('solc');
 var fs = require('fs');
@@ -61,7 +74,8 @@ Walla!! trailing`88bb0029`!! Ahhh!!! It is different from what we get! Gnosis ab
 
 Since this contract has already been verifed, Etherscan.io will take you to [this page](https://etherscan.io/address/0x851b7f3ab81bd8df354f0d7640efcd7288553419#code). Take a look at the bytecode, it does ends with `88bb0029`. So, the question is what's wrong with our process. Let's debug. 
 
-<!-- TODo: debug and delete this step. -->
+**TODD: debug and delete this step7.**
+
 7. Debug process: let's go back to the node console:
 ```javascript
 solc.compile(input,0)['contracts'][':MultiSigWalletWithDailyLimit']['metadata']
