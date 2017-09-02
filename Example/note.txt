@@ -1,0 +1,10 @@
+bytecode_prefix:0x60606040523615	
+				PUSH1 0x60
+				PUSH1 0x40
+				MSTORE
+				CALLDATASIZE
+				ISZERO
+
+swarm_prefix:a165627a7a72305820
+swarm_suffix:0029
+swarm_length:32 bytes (64 hex char)

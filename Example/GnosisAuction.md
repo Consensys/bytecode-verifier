@@ -5,69 +5,37 @@ The following process describes the steps to be automated by the verifier tool:
 1. Create and enter a new folder named "test_bytecode" or whatever you prefer. `mkdir test_bytecode && cd test_bytecode`. 
 Then initiate npm for a local dependency list. `npm init` (for simplicity, you could skip most of the specification e.g. 'author','licence','description'etc.)
 
-2. Copy code from [etherscan](https://etherscan.io/address/0x851b7f3ab81bd8df354f0d7640efcd7288553419#code "Gnosis Auction contract code"), and paste into a empty file. Name the file `GnosisAuction.sol` or whatever filename you prefer, as long as having a `.sol` file extension. 
+2. Copy code from [etherscan](https://etherscan.io/address/0x851b7f3ab81bd8df354f0d7640efcd7288553419#code "Gnosis Auction contract code"), and paste into a empty file. Name the file `MultiSigWalletWithDailyLimit.sol` (Attention: the file name has to follow the contract name, case-sensitive, with a `.sol` file extension!)
 
-3. Install a specified solidity compiler version at your choice using npm. In our case, we will choose to use `v0.4.10+commit.f0d539ae` , type in command: `npm install solc@v0.4.10+commit.f0d539ae --save`(By the time of writing, without specifying the version, `npm install solc` will download v0.4.16 compiler).
+3. Install a specified solidity compiler version at your choice using npm. In our case, we will choose to use `v0.4.10+commit.f0d539ae` , 
+Go to `node_modules/solc/` folder, type in command 
 
-To make sure you got the right version, two ways to verify. 
-One: go to `./package.json`, you should be able to see `"dependencies": {"solc": "^0.4.10"}` in your dependency list. 
-Two: go to node console by typing `node`, then enter the following:
-```javascript
-var solc = require('solc')
-solc.version()
-```
-you should also be able to see the result `'0.4.16+commit.d7661dd9.Emscripten.clang'`
-
-The reason why `solc.useVersion('v0.4.10+commit.f0d539ae')` is not used, which seems much easier, is that when you type in command `npm install solc@certain_version`, according `soljson-certain_version.js`are not added to `./bin/`, so the module won't be found.
-
-Another point to keep in mind is that, every time you try to switch to another version, install that version with `--save` to replace the current dependency entry. Then close node console(if any), and open a new one, and re-require. 
-
-4. Compile the code, enter the node console (command: `node`)
-```javascript
-var solc = require('solc');
-var fs = require('fs');
-var input = fs.readFileSync('absolute_path_to_folder/GnosisAuction.sol','utf8');
-solc.compile(input,0);
-```
-Note: the second parameter `0` is to disable optimizer. 
-
-By now, the compiled result is a hug HUG HUGGG JSON style object. In order to read any information without painfully scroll through the tiny screen. Please find out the output format at [Solidity Doc](https://solidity.readthedocs.io/en/develop/using-the-compiler.html)
-
-For our purpose, all we need is the bytecode, therefore type in the following:
-```javascript
-solc.compile(input)['contracts'][':MultiSigWalletWithDailyLimit']['bytecode']
-```
-Of course, in other cases `:contractName`depends on the actual contract name being compiled.
-
-In our case, if nothing goes wrong, the node console should give you a string starting with `606060405234156200000d5...` and ends with `08a428862b0029`. 
-
-![compiled bytecode]('../assets/wrong_result.png')
-
-5. Now, it's time to testify the actual bytecode on the blockchain is the same as what the compiler outputs. Stay in the node console and do the following:
-```javascript
-var Web3 = require('web3');
-var web3 = new Web3( new Web3.providers.HttpProvider("https://mainnet.infura.io/"));
-web3.eth.getCode('0x851b7f3ab81bd8df354f0d7640efcd7288553419')
-```
-If you are using testrpc, it may gives the result directly, but if you are using infura, the console may return a Promise, therefore let's embrace the Promise.
-
-```javascript
-web3.eth.getCode('0x851b7f3ab81bd8df354f0d7640efcd7288553419').then(console.log)
+```shell
+mkdir bin
+wget https://raw.githubusercontent.com/ethereum/solc-bin/gh-pages/bin/soljson-v0.4.10%2Bcommit.f0d539ae.js ./node_modules/solc/bin/
 ```
 
-Walla!! trailing`88bb0029`!! Ahhh!!! It is different from what we get! Gnosis abuses my trust! ..... Wait, or did they?
+Now, you have the specific compiler ready.
 
-6. Double check through [EtherScan Verifier](https://etherscan.io/verifyContract), Carefully choose the compiler version and disable optimizer. 
+4. Time for the truth. Go to folder `bytecode-verifier/Example`folder, type in the following command in your terminal:
 
-Since this contract has already been verifed, Etherscan.io will take you to [this page](https://etherscan.io/address/0x851b7f3ab81bd8df354f0d7640efcd7288553419#code). Take a look at the bytecode, it does ends with `88bb0029`. So, the question is what's wrong with our process. Let's debug. 
-
-<!-- TODo: debug and delete this step. -->
-7. Debug process: let's go back to the node console:
-```javascript
-solc.compile(input,0)['contracts'][':MultiSigWalletWithDailyLimit']['metadata']
+```shell
+node verifier.js v0.4.10+commit.f0d539ae MultiSigWalletWithDailyLimit.sol 0x851b7f3ab81bd8df354f0d7640efcd7288553419 0
 ```
-![metadata display]('../assets/include_dev_doc_wrong_result.png')
-Look carefully and compare the ABI, we saw something unusual: ** 'devdoc', 'kecaak256','bzzr'**. These metadata are compiled into our bytecode, That is why we get different result! 
 
-By default, `solc` takes all of them. The guess right now is that if we exclude them as input, the output should be the same. 
+To clarify, here is what all those parameters being passed:
+|Parameter  |Content           |
+|-----------|:----------------:|
+|First      |Compiler Version  |  
+|Second     |File Name         |
+|Third      |Contract Address  |
+|Fourth     |Optimizer (0 or 1)|
 
+So what we mean by passing the four parameters is that we want to compare the bytecode of the contract on blockchain at `0x851b7f3ab81bd8df354f0d7640efcd7288553419` with our locally compiled bytecode with a choice of compiler version `v0.4.10+commit.f0d539ae` and optimizer disabled. 
+
+if everything goes correctly, what you will get is the following:
+![bytecode verified](../assets/correct_result.png)
+
+Additionally, you could see the individual actually deployed bytecode in 'from_blockchain.txt' and 'from_compiler.txt'. Of course, actual Javascript code can be found at 'verifier.js'
+
+Cheers!
