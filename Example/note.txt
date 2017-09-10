@@ -1,4 +1,4 @@
-bytecode_prefix:0x60606040523615	
+bytecode_prefix:0x6060604052 3615	
 				PUSH1 0x60
 				PUSH1 0x40
 				MSTORE
