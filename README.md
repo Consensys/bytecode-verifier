@@ -18,18 +18,35 @@ npm install --save-dev eth-bytecode-verifier
 Run this command anywhere and console will output a help text on how to use verifier and what parameters need to be passed on.
 
 Example Screenshot:
-![help_text](../assets/verifier-help.png)
+```
+help text
+```
+
+![help text](../verifierPoC/assets/verifier-help.png)
 
 ## solc-version 
 Run this command anywhere and console will output a list of available solidity compiler versions you can choose from.
 
 Example Screenshot:
-![solc_version](../assets/solc-version.png)
+ ```
+ solc version list
+ ```
+
+![solc version](../verifierPoC/assets/solc-version.png)
 
 
 ## verify [solc_version] [file_name] [contract_address] [optimizer_enable]
 Copy the contract code and pasted it into a file in your current directory, name it with the exact same name as the contract with `.sol` extentions. Then run this command, if not sure about the solidity compiler version, run `solc-version` for more detail. 
 
 Example Screenshot:
-![file_upload](../assets/file_upload.png)
-![verify](../assets/verify.png)
+```
+local file created
+```
+
+![file upload](../verifierPoC/assets/file_upload.png)
+
+```
+use verifier CLI to verify bytecode
+```
+
+![verify](../verifierPoC/assets/verify.png)
