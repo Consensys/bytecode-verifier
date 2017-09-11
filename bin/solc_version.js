@@ -1,0 +1,55 @@
+#! /usr/bin/env node
+console.log("================================")
+console.log('')
+console.log('!!! Two Things to NOTE !!!')
+console.log('!!! 1. use as lastest version of solc as possible !!!')
+console.log('!!! 2. only copy the version session to pass on to verifier as parameter')
+	console.log('e.g."v0.4.12+commit.194ff033" is the parameter,')
+	console.log('don\'t use "soljson-v0.4.16+commit.d7661dd9.js") !!!') 
+
+console.log("================================")
+console.log('')
+console.log(' "latestRelease": "0.4.16"')
+console.log("Here is a list of all available solc versions:")
+console.log('"0.4.16": "soljson-v0.4.16+commit.d7661dd9.js",')
+console.log('"0.4.15": "soljson-v0.4.15+commit.bbb8e64f.js",')
+console.log('"0.4.14": "soljson-v0.4.14+commit.c2215d46.js",')
+console.log('"0.4.13": "soljson-v0.4.13+commit.fb4cb1a.js",')
+console.log('"0.4.12": "soljson-v0.4.12+commit.194ff033.js",')
+console.log('"0.4.11": "soljson-v0.4.11+commit.68ef5810.js",')
+console.log('"0.4.10": "soljson-v0.4.10+commit.f0d539ae.js",')
+console.log('"0.4.9": "soljson-v0.4.9+commit.364da425.js",')
+console.log('"0.4.8": "soljson-v0.4.8+commit.60cc1668.js",')
+console.log('"0.4.7": "soljson-v0.4.7+commit.822622cf.js",')
+console.log('"0.4.6": "soljson-v0.4.6+commit.2dabbdf0.js",')
+console.log('"0.4.5": "soljson-v0.4.5+commit.b318366e.js",')
+console.log('"0.4.4": "soljson-v0.4.4+commit.4633f3de.js",')
+console.log('"0.4.3": "soljson-v0.4.3+commit.2353da71.js",')
+console.log('"0.4.2": "soljson-v0.4.2+commit.af6afb04.js",')
+console.log('"0.4.1": "soljson-v0.4.1+commit.4fc6fc2c.js",')
+console.log('"0.4.0": "soljson-v0.4.0+commit.acd334c9.js",')
+console.log('"0.3.6": "soljson-v0.3.6+commit.3fc68da.js",')
+console.log('"0.3.5": "soljson-v0.3.5+commit.5f97274.js",')
+console.log('"0.3.4": "soljson-v0.3.4+commit.7dab890.js",')
+console.log('"0.3.3": "soljson-v0.3.3+commit.4dc1cb1.js",')
+console.log('"0.3.2": "soljson-v0.3.2+commit.81ae2a7.js",')
+console.log('"0.3.1": "soljson-v0.3.1+commit.c492d9b.js",')
+console.log('"0.3.0": "soljson-v0.3.0+commit.11d6736.js",')
+console.log('"0.2.2": "soljson-v0.2.2+commit.ef92f56.js",')
+console.log('"0.2.1": "soljson-v0.2.1+commit.91a6b35.js",')
+console.log('"0.2.0": "soljson-v0.2.0+commit.4dc2445.js",')
+console.log('"0.1.7": "soljson-v0.1.7+commit.b4e666c.js",')
+console.log('"0.1.6": "soljson-v0.1.6+commit.d41f8b7.js",')
+console.log('"0.1.5": "soljson-v0.1.5+commit.23865e3.js",')
+console.log('"0.1.4": "soljson-v0.1.4+commit.5f6c3cd.js",')
+console.log('"0.1.3": "soljson-v0.1.3+commit.28f561.js",')
+console.log('"0.1.2": "soljson-v0.1.2+commit.d0d36e3.js",')
+console.log('"0.1.1": "soljson-v0.1.1+commit.6ff4cd6.js"')
+
+
+
+
+
+
+
+

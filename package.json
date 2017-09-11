@@ -1,11 +1,17 @@
 {
-  "name": "bytecode-verifier",
+  "name": "eth-bytecode-verifier",
   "version": "0.0.1",
-  "description": "The purpose of this tool is to verify that the Contract Source on etherscan matches the bytecode that's actually on the blockchain.  If the code shown on etherscan does not match the blockchain, the tool must display a danger sign.  The purpose of the tool is to warn people if the Contract Source information on etherscan has been tampered with.",
+  "description": "The purpose of this tool is to verify that the Contract Source on etherscan matches the bytecode that's actually on the blockchain.  If the code shown on etherscan does not match the blockchain, the tool will display a warning message.  The purpose of the tool is to warn people if the Contract Source information on etherscan has been tampered with.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "compare": "node test.js"
+    "verify": "verify",
+    "help": "verifier-help",
+    "solc-version": "solc-version"
+  },
+  "bin": {
+    "verify": "bin/verify.js",
+    "verifier-help": "bin/help.js",
+    "solc-version": "bin/solc_version.js"
   },
   "repository": {
     "type": "git",
