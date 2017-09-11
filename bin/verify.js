@@ -25,6 +25,7 @@ var bytecode_from_blockchain;
 console.log('==========================================')
 console.log('Compiler Version: '+solc_version)
 // use specified solc version on the fly by loading from github
+console.log('Compiling in progress, dude, please be patient and give me 15 sec ...')
 solc.loadRemoteVersion(solc_version, function(err, solc_specific){
 	if(err){
 		console.log('Solc failed to loaded'+err);
