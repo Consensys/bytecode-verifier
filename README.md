@@ -19,7 +19,7 @@ Run this command anywhere and console will output a help text on how to use veri
 
 Example Screenshot:
 ```
-help text
+verifier-help
 ```
 
 ![help text](../verifierPoC/assets/verifier-help.png)
@@ -29,7 +29,7 @@ Run this command anywhere and console will output a list of available solidity c
 
 Example Screenshot:
  ```
- solc version list
+ solc-version
  ```
 
 ![solc version](../verifierPoC/assets/solc-version.png)
