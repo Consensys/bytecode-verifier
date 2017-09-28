@@ -3,6 +3,7 @@
 const program = require('commander');
 const chalk = require('chalk');
 const figlet = require('figlet');
+
 const {prompt} = require('inquirer');
 
 const {solcVersionList } = require('./solcVersion');
@@ -40,12 +41,13 @@ const compiler_question = [
   }
 ]
 program
-  .version('0.0.1')
+  .version('0.1.2')
   .description('=========  Ethereum Bytecode Verifier  ==========='+'\n'+
   chalk.yellow(
 		figlet.textSync('eth-Verifier',{horizontalLayout:'default'})
   )+'\n'+'   ===============================================')
   .option('-l, --list', 'list of formal released Solidity Compiler')
+
 
 program
   .command('verify')
