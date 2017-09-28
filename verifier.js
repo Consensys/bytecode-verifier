@@ -111,12 +111,12 @@ const verifier = (answers) =>{
     		if (bytecode_from_blockchain == bytecode_from_compiler){
     			console.log()
     			console.log('==========================================')
-    			console.log("Bytecode Verified!!")
+    			console.log(chalk.bold.underline.green("Bytecode Verified!!")
     		}
     		else{
     			console.log()
     			console.log('==========================================')
-    			console.log("Bytecode doesn't match!!")
+    			console.log(chalk.bold.underline.red("Bytecode doesn't match!!")
     		}
       }
       // if the solc version is less than 0.4.7, then just directly compared the two.
