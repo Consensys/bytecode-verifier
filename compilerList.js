@@ -24,8 +24,8 @@ const chalk = require('chalk');
          console.log(item['path'].slice(8,-3));
        }
      }
-     console.log();
    });
+   console.log();
  }
 
 module.exports = {compiler_look_up};
