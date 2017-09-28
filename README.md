@@ -1,7 +1,7 @@
 # Bytecode Verifier
 The purpose of this tool is to verify that the Contract Source on etherscan matches the bytecode that's actually on the blockchain.  If the code shown on etherscan does not match the blockchain, the tool must display a danger sign.  The purpose of the tool is to warn people if the Contract Source information on etherscan has been tampered with.
 
-# Installation 
+# Installation
 Prefer global install:
 ```shell
 npm install eth-bytecode-verifier -g
@@ -12,41 +12,32 @@ Or install as per project base dev-dependency:
 npm install --save-dev eth-bytecode-verifier
 ```
 
-# Usage 
-
-## verifier-help 
-Run this command anywhere and console will output a help text on how to use verifier and what parameters need to be passed on.
-
-Example Screenshot:
-```
-help text
+If successfully installed, try the `-h` or `--help` to read a brief info about this tool.
+```shell
+ethv --help
 ```
 
-![help text](../verifierPoC/assets/verifier-help.png)
+# Usage
 
-## solc-version 
-Run this command anywhere and console will output a list of available solidity compiler versions you can choose from.
+## ethv --list
 
-Example Screenshot:
- ```
- solc version list
- ```
-
-![solc version](../verifierPoC/assets/solc-version.png)
+To quickly get a list of formal major release version of solidity compiler.
 
 
-## verify [solc_version] [file_name] [contract_address] [optimizer_enable]
-Copy the contract code and pasted it into a file in your current directory, name it with the exact same name as the contract with `.sol` extentions. Then run this command, if not sure about the solidity compiler version, run `solc-version` for more detail. 
+## ethv compiler
 
-Example Screenshot:
-```
-local file created
-```
+To look up for an intermediate "nightly" version of solidity compiler
 
-![file upload](../verifierPoC/assets/file_upload.png)
 
-```
-use verifier CLI to verify bytecode
-```
+## ethv verify
 
-![verify](../verifierPoC/assets/verify.png)
+1. Save the contract code into a file with name `*YourContractName*.sol`.
+ *If your contract imports other contract in a separate file or it consists of multiple contracts, please do name the file as the main contract since that's what's the bytecode we tend to verify.(e.g. `contract StandardToken is Token {}`, then `StandardToken.sol` should be the file name.)*
+
+2. The `ethv` verifier will prompt 4 questions. Among which, be careful about the format of compiler version specification. If you are not sure, try run `ethv compiler` first, and copy the legitimate version string from the output.
+
+3. If bytecode of your local file checks out with what's actually on the blockchain address, then terminal will return positive feedback, otherwise red bold alert feedback will be returned.
+
+
+# Contributing
+This bytecode verifier is entirely open sourced, anyone in the community is free to use in any purpose. (see MIT License for details) More importantly, any issues or pull request are more than welcomed. According `npm package` can be found (here)[https://www.npmjs.com/package/eth-bytecode-verifier].
