@@ -16,6 +16,7 @@ If successfully installed, try the `-h` or `--help` to read a brief info about t
 ```shell
 ethv --help
 ```
+![ethv_help](../master/assets/ethv_help.png)
 
 # Usage
 
@@ -23,12 +24,13 @@ ethv --help
 
 To quickly get a list of formal major release version of solidity compiler.
 
+![ethv_list](../master/assets/ethv_list.png)
 
 ## ethv compiler
 
 To look up for an intermediate "nightly" version of solidity compiler
 
-
+![ethv_compiler](../master/assets/ethv_compiler.png)
 ## ethv verify
 
 1. Save the contract code into a file with name `*YourContractName*.sol`.
@@ -38,6 +40,10 @@ To look up for an intermediate "nightly" version of solidity compiler
 
 3. If bytecode of your local file checks out with what's actually on the blockchain address, then terminal will return positive feedback, otherwise red bold alert feedback will be returned.
 
+#### Example: Golem_MultiSigWallet
+![golem_multisig](../master/example/GolemMultisig/ethv_golem_multisig.png)
+
+*For more example: please go to [example subfolder](https://github.com/ConsenSys/bytecode-verifier/tree/master/example)*
 
 # Contributing
 This bytecode verifier is entirely open sourced, anyone in the community is free to use in any purpose. (see MIT License for details) More importantly, any issues or pull request are more than welcomed. According `npm package` can be found (here)[https://www.npmjs.com/package/eth-bytecode-verifier].
