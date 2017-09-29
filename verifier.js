@@ -44,8 +44,8 @@ const verifier = (answers) =>{
       var bytecode = output['contracts'][':'+file_name.slice(0,file_name.length-4)]['runtimeBytecode'];
     }
 
-    if (parseInt(solc_version.match(/v\d+?\.\d+?\.\d+?[+-]/gi)[0].match(/\.\d+/g)[0].slice(1,)) >= 4
-     && parseInt(solc_version.match(/v\d+?\.\d+?\.\d+?[+-]/gi)[0].match(/\.\d+/g)[1].slice(1,)) >= 7){
+    if (parseInt(solc_version.match(/v\d+?\.\d+?\.\d+?[+-]/gi)[0].match(/\.\d+/g)[0].slice(1)) >= 4
+     && parseInt(solc_version.match(/v\d+?\.\d+?\.\d+?[+-]/gi)[0].match(/\.\d+/g)[1].slice(1)) >= 7){
       // if solc version is at least 0.4.7, then swarm hash is included into the bytecode.
       // every bytecode starts with a fixed opcode: "PUSH1 0x60 PUSH1 0x40 MSTORE"
     	// which is 6060604052 in bytecode whose length is 10
@@ -91,8 +91,8 @@ const verifier = (answers) =>{
   	// using web3 getCode function to read from blockchain
   	web3.eth.getCode(contract_address)
   	.then(output =>{
-      if (parseInt(solc_version.match(/v\d+?\.\d+?\.\d+?[+-]/gi)[0].match(/\.\d+/g)[0].slice(1,)) >= 4
-       && parseInt(solc_version.match(/v\d+?\.\d+?\.\d+?[+-]/gi)[0].match(/\.\d+/g)[1].slice(1,)) >= 7){
+      if (parseInt(solc_version.match(/v\d+?\.\d+?\.\d+?[+-]/gi)[0].match(/\.\d+/g)[0].slice(1)) >= 4
+       && parseInt(solc_version.match(/v\d+?\.\d+?\.\d+?[+-]/gi)[0].match(/\.\d+/g)[1].slice(1)) >= 7){
         // code stored at the contract address has no constructor or contract creation bytecode,
     		// only with swarm metadata appending at the back, therefore to get the actual deployed bytecode,
     		// just slice out the trailing swarm metadata.
