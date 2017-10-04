@@ -10,6 +10,7 @@ const {solcVersionList } = require('./solcVersion');
 const {verifier} = require('./verifier');
 const {compiler_look_up} = require('./compilerList');
 
+
 // craft question for verifier parameters.
 const verifier_question = [
   {
@@ -41,7 +42,7 @@ const compiler_question = [
   }
 ]
 program
-  .version('0.1.3')
+  .version('0.2.0')
   .description('=========  Ethereum Bytecode Verifier  ==========='+'\n'+
   chalk.yellow(
 		figlet.textSync('eth-Verifier',{horizontalLayout:'default'})
@@ -50,17 +51,42 @@ program
 
 
 program
-  .command('verify')
+  .command('verify <chainChoice>')
   .description('Verify a contract against bytecode on Blockchain')
-  .action(() => {
-    prompt(verifier_question)
-      .then( (answers) =>{
-      answers['file_folder'] = process.cwd();
-      verifier(answers);
-    })
-      .catch(err => {
-        console.log(err);
-      });
+  .action((chainChoice) => {
+    if (typeof chainChoice == 'undefined'){
+      console.log('Please specify a chain (e.g. mainnet)');
+    }
+    else{
+      console.log('You\'ve chosen: '+chainChoice);
+      
+      const net_to_provider = {
+        'mainnet':'https://mainnet.infura.io',
+        'ropsten': 'https://ropsten.infura.io',
+        'kovan': 'https://kovan.infura.io',
+        'rinkeby': 'https://rinkeby.infura.io',
+      }
+      
+      if (chainChoice == 'mainnet' || chainChoice == 'ropsten'
+        || chainChoice=='kovan' || chainChoice== 'rinkeby'){
+        
+        var provider = net_to_provider[chainChoice];
+        // After confirming the chain choice, prompt question. 
+        prompt(verifier_question)
+          .then( (answers) =>{
+          answers['file_folder'] = process.cwd();
+          verifier(answers, provider);
+        })
+          .catch(err => {
+            console.log(err);
+          });
+      }
+      else{
+        console.log(chalk.red.bold('Invalid chain choice')+' Your current choice is by default: mainchain');
+        console.log(chalk.green.bold('Please choose from: ')+chalk.underline('mainnet')+' , '+chalk.underline('ropsten')+' , '+
+        chalk.underline('kovan')+' , '+chalk.underline('rinkeby'));
+      }
+    }
   });
 
 program
@@ -68,7 +94,7 @@ program
   .description('Complete compiler version look up (major release plus all nightly commits)')
   .action(()=>{
     prompt(compiler_question)
-      .then((answers)=>{
+      .then((answers, provider)=>{
         compiler_look_up(answers);
       })
       .catch(err=>{
@@ -81,3 +107,5 @@ program
   program.parse(process.argv);
 
   if (program.list) solcVersionList();
+  
+  

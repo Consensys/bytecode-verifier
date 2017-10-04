@@ -1,12 +1,12 @@
 const solc = require('solc');
 const Web3 = require('web3');
-const web3 = new Web3( new Web3.providers.HttpProvider("https://mainnet.infura.io"));
 const fs = require('fs');
 const chalk = require('chalk');
 /*
   Function [verifier]
 */
-const verifier = (answers) =>{
+const verifier = (answers, provider) =>{
+  var web3 = new Web3( new Web3.providers.HttpProvider(provider));
   let solc_version = answers['solc_version'];
   let file_name = answers['file_name'];
   let contract_address = answers['contract_address'];
