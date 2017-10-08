@@ -33,7 +33,7 @@ To look up for an intermediate "nightly" version of solidity compiler
 ![ethv_compiler](../master/assets/ethv_compiler.png)
 
 ## ethv verify \<chainChoice>
-*! Currently this tool can verify contracts on: mainnet, kovan and ropsten. (rinkeby on its way.) !*
+*! Currently this tool can verify contracts on: mainnet, kovan, ropsten and rinkeby (NOTE: for contracts on Rinkeby, only compiler version no earlier than **0.4.9**)!*
 1. Save the contract code into a file with name `*YourContractName*.sol`.
  *If your contract imports other contract in a separate file or it consists of multiple contracts, please do name the file as the main contract since that's what's the bytecode we tend to verify.(e.g. `contract StandardToken is Token {}`, then `StandardToken.sol` should be the file name.)*
 
