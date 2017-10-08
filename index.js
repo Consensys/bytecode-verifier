@@ -42,7 +42,7 @@ const compiler_question = [
   }
 ]
 program
-  .version('0.2.0')
+  .version('0.2.1')
   .description('=========  Ethereum Bytecode Verifier  ==========='+'\n'+
   chalk.yellow(
 		figlet.textSync('eth-Verifier',{horizontalLayout:'default'})
