@@ -31,8 +31,9 @@ To quickly get a list of formal major release version of solidity compiler.
 To look up for an intermediate "nightly" version of solidity compiler
 
 ![ethv_compiler](../master/assets/ethv_compiler.png)
-## ethv verify
 
+## ethv verify \<chainChoice>
+*! Currently this tool can verify contracts on: mainnet, kovan and ropsten. (rinkeby on its way.) !*
 1. Save the contract code into a file with name `*YourContractName*.sol`.
  *If your contract imports other contract in a separate file or it consists of multiple contracts, please do name the file as the main contract since that's what's the bytecode we tend to verify.(e.g. `contract StandardToken is Token {}`, then `StandardToken.sol` should be the file name.)*
 
@@ -40,8 +41,11 @@ To look up for an intermediate "nightly" version of solidity compiler
 
 3. If bytecode of your local file checks out with what's actually on the blockchain address, then terminal will return positive feedback, otherwise red bold alert feedback will be returned.
 
-#### Example: Golem_MultiSigWallet
+#### Example1: Golem_MultiSigWallet (mainnet)
 ![golem_multisig](../master/example/GolemMultisig/ethv_golem_multisig.png)
+
+#### Example2: Oraclize (kovan)
+![oraclize_kovan](../master/example/Oraclize(kovan)/oraclize_kovan.png)
 
 *For more example: please go to [example subfolder](https://github.com/ConsenSys/bytecode-verifier/tree/master/example)*
 
