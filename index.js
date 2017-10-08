@@ -6,9 +6,9 @@ const figlet = require('figlet');
 
 const {prompt} = require('inquirer');
 
-const {solcVersionList } = require('./solcVersion');
-const {verifier} = require('./verifier');
-const {compiler_look_up} = require('./compilerList');
+const {solcVersionList } = require('./src/solcVersion');
+const {verifier} = require('./src/verifier');
+const {compiler_look_up} = require('./src/compilerList');
 
 
 // craft question for verifier parameters.
