@@ -62,12 +62,6 @@ const verifier = (answers, provider) =>{
     	// construct the actual deployed bytecode
     	bytecode_from_compiler = '0x'+fixed_prefix + bytecode.slice(starting_point, ending_point);
 
-    	// the length of swarm prefix is 18
-    	var swarm_starting = ending_point + 18;
-    	// the length of swarm suffix is 4 (which is 0029, a trailing substring you see in every contract's bytecode)
-    	var swarm_ending = bytecode.length - 4;
-    	var swarm_hash = bytecode.slice(swarm_starting,swarm_ending);
-
     	console.log()
     	console.log('==========================================')
     	console.log('result from compiler is written in "from_compiler.txt" file');
@@ -98,14 +92,9 @@ const verifier = (answers, provider) =>{
     		// only with swarm metadata appending at the back, therefore to get the actual deployed bytecode,
     		// just slice out the trailing swarm metadata.
     		var ending_point = output.search('a165627a7a72305820');
-    		var swarm_starting = ending_point + 18;
-    		var swarm_ending = output.length -4;
-    		var swarm_hash = output.slice(swarm_starting, swarm_ending);
-        // In case of concatenation of two swarm hashes at the back (some in rinkeby)
-        if (swarm_hash.length > 64){
-          swarm_hash = swarm_hash.slice(0,63);
-        }
-        
+    		var swarm_hash_full = output.slice(output.match(/(?!.*a165627a7a72305820[a-f0-9]+0029)/).index-1, -4);
+        var swarm_hash = swarm_hash_full.slice(18);
+  
     		bytecode_from_blockchain = output.slice(0,ending_point);
 
     		fs.writeFileSync('from_blockchain.txt', bytecode_from_blockchain, 'utf8');
