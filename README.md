@@ -1,15 +1,14 @@
 # Bytecode Verifier
-The purpose of this tool is to verify that the Contract Source on etherscan matches the bytecode that's actually on the blockchain.  If the code shown on etherscan does not match the blockchain, the tool must display a danger sign.  The purpose of the tool is to warn people if the Contract Source information on etherscan has been tampered with.
+*Bytecode Verifier* is a handy commandline tool for verifying locally compiled bytecode of a target Solidity contract against its actual bytecode stored in Etheruem Blockchain provided its contract address. This tool:
+
+* **integrity/correctness of bytecode**: what's actually being stored on chain is correctly compiled from particular contract, which might be helpful in case of non-trivial potential high-value holder contract deployment(e.g. MultiSig Wallet), especially the contract is deployed through a third party platform.
+* **Minimimal effort, simple to use**: solidity compiler envolves overtime with minor and some major changes, which complicates the verification of bytecode. (as recurring "bytecode doesn't match" questions being asked on Ethereum Stack Exchange). *Bytecode Verifier* has been tested against latest version all the way back to some of the oldest deployed contracts.
+* **Testnet friendly**: most projects launch on testnet before deploying the contract system to mainnet, this tool supports Rinkeby, Kovan and Ropsten Testnet, which constitute three active, well-maintained testnets that most ethereum developers use.
 
 # Installation
 Prefer global install:
 ```shell
 npm install eth-bytecode-verifier -g
-```
-
-Or install as per project base dev-dependency:
-```shell
-npm install --save-dev eth-bytecode-verifier
 ```
 
 If successfully installed, try the `-h` or `--help` to read a brief info about this tool.
@@ -18,19 +17,7 @@ ethv --help
 ```
 ![ethv_help](../master/assets/ethv_help.png)
 
-# Usage
-
-## ethv --list
-
-To quickly get a list of formal major release version of solidity compiler.
-
-![ethv_list](../master/assets/ethv_list.png)
-
-## ethv compiler
-
-To look up for an intermediate "nightly" version of solidity compiler
-
-![ethv_compiler](../master/assets/ethv_compiler.png)
+# Quick Usage
 
 ## ethv verify \<chainChoice>
 *! Currently this tool can verify contracts on: mainnet, kovan, ropsten and rinkeby (NOTE: for contracts on Rinkeby, only compiler version no earlier than **0.4.9**)!*
@@ -49,5 +36,20 @@ To look up for an intermediate "nightly" version of solidity compiler
 
 *For more example: please go to [example subfolder](https://github.com/ConsenSys/bytecode-verifier/tree/master/example)*
 
+## ethv --list
+
+To quickly get a list of formal major release version of solidity compiler.
+
+![ethv_list](../master/assets/ethv_list.png)
+
+## ethv compiler
+
+To look up for an intermediate "nightly" version of solidity compiler
+
+![ethv_compiler](../master/assets/ethv_compiler.png)
+
 # Contributing
 This bytecode verifier is entirely open sourced, anyone in the community is free to use in any purpose. (see MIT License for details) More importantly, any issues or pull request are more than welcomed. According `npm package` can be found (here)[https://www.npmjs.com/package/eth-bytecode-verifier].
+
+# Acknowledgement 
+Big thanks and great gratitude to [ConsenSys Diligence](https://medium.com/@c.diligence) for making this project possible.
