@@ -1,6 +1,6 @@
 {
   "name": "eth-bytecode-verifier",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "The purpose of this tool is to verify that the Contract Source on etherscan matches the bytecode that's actually on the blockchain. If the code shown on etherscan does not match the blockchain, the tool will display a warning message.",
   "main": "test.js",
   "preferGlobal": true,

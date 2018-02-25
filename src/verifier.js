@@ -49,7 +49,7 @@ const verifier = (answers, provider) =>{
       // if solc version is at least 0.4.7, then swarm hash is included into the bytecode.
       // every bytecode starts with a fixed opcode: "PUSH1 0x60 PUSH1 0x40 MSTORE"
     	// which is 6060604052 in bytecode whose length is 10
-
+      
     	var fixed_prefix= bytecode.slice(0,10);
     	// every bytecode from compiler would have constructor bytecode inserted before actual deployed code.
     	// the starting point is a fixed opcode: "CALLDATASIZE ISZERO"
@@ -64,9 +64,7 @@ const verifier = (answers, provider) =>{
 
     	console.log()
     	console.log('==========================================')
-    	console.log('result from compiler is written in "from_compiler.txt" file');
-
-    	fs.writeFileSync('from_compiler.txt', bytecode_from_compiler, 'utf8');
+    	console.log('Finish compiling contract using solc compiler...');
     	// testify with result from blockchain until the compile finishes.
     	testify_with_blochchain(solc_version);
     }
@@ -74,9 +72,7 @@ const verifier = (answers, provider) =>{
       bytecode_from_compiler = '0x'+bytecode;
       console.log()
     	console.log('==========================================')
-    	console.log('result from compiler is written in "from_compiler.txt" file');
-
-    	fs.writeFileSync('from_compiler.txt', bytecode_from_compiler, 'utf8');
+    	console.log('Finishing compiling contract using solc compiler...');
     	// testify with result from blockchain until the compile finishes.
     	testify_with_blochchain(solc_version);
     }
@@ -92,16 +88,16 @@ const verifier = (answers, provider) =>{
     		// only with swarm metadata appending at the back, therefore to get the actual deployed bytecode,
     		// just slice out the trailing swarm metadata.
     		var ending_point = output.search('a165627a7a72305820');
-    		var swarm_hash_full = output.slice(output.match(/(?!.*a165627a7a72305820[a-f0-9]+0029)/).index-1, -4);
+
+    		var swarm_hash_full = output.slice(output.lastIndexOf("a165627a7a72305820"), -4);
         var swarm_hash = swarm_hash_full.slice(18);
   
     		bytecode_from_blockchain = output.slice(0,ending_point);
 
-    		fs.writeFileSync('from_blockchain.txt', bytecode_from_blockchain, 'utf8');
     		console.log()
     		console.log('==========================================')
-    		console.log('result from blockchain is written in "from_blockchain.txt" file');
-    		console.log("Corresponding swarm hash is: 0x" + swarm_hash);
+    		console.log('Finishing retrieving bytecode from blockchain...');
+    		console.log("Corresponding swarm hash is: bzzr:/" + swarm_hash);
 
     		if (bytecode_from_blockchain == bytecode_from_compiler){
     			console.log()
@@ -117,10 +113,9 @@ const verifier = (answers, provider) =>{
       // if the solc version is less than 0.4.7, then just directly compared the two.
       else{
         bytecode_from_blockchain = output;
-        fs.writeFileSync('from_blockchain.txt', bytecode_from_blockchain, 'utf8');
     		console.log()
     		console.log('==========================================')
-    		console.log('result from blockchain is written in "from_blockchain.txt" file');
+    		console.log('Finishing retrieving bytecode from blockchain...');
 
     		if (bytecode_from_blockchain == bytecode_from_compiler){
     			console.log()
