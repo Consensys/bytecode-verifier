@@ -55,7 +55,6 @@ const verifier = (answers, provider) =>{
     	// the starting point is a fixed opcode: "CALLDATASIZE ISZERO"
     	// which is 3615 in bytecode
     	var starting_point = bytecode.search('3615');
-    	var remaining_part = bytecode.slice(starting_point);
     	// a165627a7a72305820 is a fixed prefix of swarm info that was appended to contract bytecode
     	// the beginning of swarm_info is always the ending point of the actual contract bytecode
     	var ending_point = bytecode.search('a165627a7a72305820');
