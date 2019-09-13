@@ -5,6 +5,7 @@ const chalk = require('chalk');
 /*
   Function [verifier]
 */
+
 const verifier = (answers, provider) =>{
   var web3 = new Web3( new Web3.providers.HttpProvider(provider));
   let solc_version = answers['solc_version'];
@@ -33,7 +34,7 @@ const verifier = (answers, provider) =>{
 	  
 	var input_json = {  language: "Solidity",
 						sources: 
-							{file_name: {"content": input} },
+							{file: {"content": input} },
 						settings: {
 									optimizer: {
 										// disabled by default
@@ -51,41 +52,64 @@ const verifier = (answers, provider) =>{
   	// if solc successfully loaded, compile the contract and get the JSON output
   	var output = JSON.parse(solc_specific.compile(JSON.stringify(input_json)));
 	  // get bytecode from JSON output
-	  //console.log(output['contracts'][file_name.slice(0,file_name.length-4)])
-    if (typeof output['contracts'][''][':'+file_name.slice(0,file_name.length-4)] === 'undefined'){
-      // if there are more than one contract in the contract file, then the JSON representation will have ":"
-      // at the front, but if there is only the main contract, there won't, in which case the vaule assignment
-      // above will be empty or undefined.
-      var bytecode = output['contracts'][''][file_name.slice(0,file_name.length-4)]['evm']['deployedBytecode']['object'];
-    }
-    else{
-      var bytecode = output['contracts'][''][':'+file_name.slice(0,file_name.length-4)]['evm']['deployedBytecode']['object'];
-    }
-    if (parseInt(solc_version.match(/v\d+?\.\d+?\.\d+?[+-]/gi)[0].match(/\.\d+/g)[0].slice(1)) >= 4
-     && parseInt(solc_version.match(/v\d+?\.\d+?\.\d+?[+-]/gi)[0].match(/\.\d+/g)[1].slice(1)) >= 7){
+	let solc_minor = parseInt(solc_version.match(/v\d+?\.\d+?\.\d+?[+-]/gi)[0].match(/\.\d+/g)[0].slice(1))
+	let solc_patch = parseInt(solc_version.match(/v\d+?\.\d+?\.\d+?[+-]/gi)[0].match(/\.\d+/g)[1].slice(1))
+
+	try {
+		// single contract
+		var bytecode = output["contracts"][''][file_name.slice(0,file_name.length-4)]['evm']['deployedBytecode']['object']
+	} catch (err) {
+		// multi-contract file. using the contract with the same name as the file_name
+		console.log("Multi contract file detected. Compiling the main contract: " + file_name.slice(0,file_name.length-4))
+		var bytecode = output["contracts"]["file"][file_name.slice(0,file_name.length-4)]['evm']['deployedBytecode']['object']
+	}
+
+    if ((solc_minor >= 4) && (solc_patch >= 7)){
       // if solc version is at least 0.4.7, then swarm hash is included into the bytecode.
       // every bytecode starts with a fixed opcode: "PUSH1 0x60 PUSH1 0x40 MSTORE"
     	// which is 6060604052 in bytecode whose length is 10
       
-    	var fixed_prefix= bytecode.slice(0,10);
     	// every bytecode from compiler would have constructor bytecode inserted before actual deployed code.
     	// the starting point is a fixed opcode: "CALLDATASIZE ISZERO"
-    	// which is 3615 in bytecode
-    	var starting_point = bytecode.search('3615');
+		// which is 3615 in bytecode
+
+		if (solc_minor >= 4 && solc_patch >= 22) {
+			// if solc version is at least 0.4.22, initial bytecode has 6080... instead of 6060...
+			var starting_point = bytecode.lastIndexOf('6080604052');
+			// a165627a7a72305820 is a fixed prefix of swarm info that was appended to contract bytecode
+			// the beginning of swarm_info is always the ending point of the actual contract bytecode
+
+		} else if (solc_patch < 4 && solc_patch >= 7) {
+			// if solc version is at least 0.4.7, then swarm hash is included into the bytecode.
+			// every bytecode starts with a fixed opcode: "PUSH1 0x60 PUSH1 0x40 MSTORE"
+			// which is 6060604052 in bytecode whose length is 10
+			// var fixed_prefix= bytecode.slice(0,10);
+
+			// every bytecode from compiler may or may not have constructor bytecode inserted before
+			// actual deployed code (since constructor is optional).So there might be multiple matching
+			// prefix of "6060604052", and actual deployed code starts at the last such pattern.
+			var starting_point = bytecode.lastIndexOf('6060604052');
+			// a165627a7a72305820 is a fixed prefix of swarm info that was appended to contract bytecode
+			// the beginning of swarm_info is always the ending point of the actual contract bytecode
+		}
+		
+		// var starting_point = (bytecode.search('3615') >= 0) ? bytecode.search('3615') : 0;
+	
     	// a165627a7a72305820 is a fixed prefix of swarm info that was appended to contract bytecode
     	// the beginning of swarm_info is always the ending point of the actual contract bytecode
-    	var ending_point = bytecode.search('a165627a7a72305820');
+		var ending_point = bytecode.search('a165627a7a72305820');
+		
+		
     	// construct the actual deployed bytecode
-    	bytecode_from_compiler = '0x'+fixed_prefix + bytecode.slice(starting_point, ending_point);
-
+    	bytecode_from_compiler = '0x' + bytecode.slice(starting_point, ending_point);
     	console.log()
     	console.log('==========================================')
 		console.log('Finish compiling contract using solc compiler...');
-    	// testify with result from blockchain until the compile finishes.
+		// testify with result from blockchain until the compile finishes.
     	testify_with_blockchain(solc_version);
     }
   	else{
-      bytecode_from_compiler = '0x'+bytecode;
+	  bytecode_from_compiler = '0x'+bytecode;
       	console.log()
     	console.log('==========================================')
 		console.log('Finishing compiling contract using solc compiler...');
@@ -142,7 +166,7 @@ const verifier = (answers, provider) =>{
     			console.log('==========================================')
     			console.log(chalk.bold.underline.red("Bytecode doesn't match!!"))
     		}
-      }
+	  }
 
   	});
   }
