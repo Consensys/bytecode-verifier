@@ -49,7 +49,7 @@ To look up for an intermediate "nightly" version of solidity compiler
 ![ethv_compiler](../master/assets/ethv_compiler.png)
 
 # Contributing
-This bytecode verifier is entirely open sourced, anyone in the community is free to use in any purpose. (see MIT License for details) More importantly, any issues or pull request are more than welcomed. According `npm package` can be found (here)[https://www.npmjs.com/package/eth-bytecode-verifier].
+This bytecode verifier is entirely open sourced, anyone in the community is free to use in any purpose. (see MIT License for details) More importantly, any issues or pull request are more than welcomed. According `npm package` can be found [here](https://www.npmjs.com/package/eth-bytecode-verifier).
 
 # Acknowledgement 
-Big thanks and great gratitude to [ConsenSys Diligence](https://medium.com/@c.diligence) for making this project possible.
+Big thanks and great gratitude to [ConsenSys Diligence](https://diligence.consensys.net/) for making this project possible.
