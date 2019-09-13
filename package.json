@@ -1,6 +1,6 @@
 {
   "name": "eth-bytecode-verifier",
-  "version": "0.2.2",
+  "version": "0.3.1",
   "description": "The purpose of this tool is to verify that the Contract Source on etherscan matches the bytecode that's actually on the blockchain. If the code shown on etherscan does not match the blockchain, the tool will display a warning message.",
   "main": "test.js",
   "preferGlobal": true,
@@ -13,20 +13,20 @@
   "author": "Alex Luoyuan Xiong",
   "license": "MIT",
   "dependencies": {
-    "chalk": "^2.1.0",
-    "commander": "^2.11.0",
-    "express": "^4.15.5",
-    "figlet": "^1.2.0",
-    "inquirer": "^3.3.0",
-    "jquery": "^3.2.1",
-    "jsdom": "^11.2.0",
-    "mongoose": "^4.11.13",
-    "solc": "^0.4.16",
-    "web3": "^1.0.0-beta.22",
-    "web3-core-requestmanager": "^1.0.0-beta.22"
+    "chalk": "^2.4.2",
+    "commander": "^3.0.1",
+    "express": "^4.17.1",
+    "figlet": "^1.2.4",
+    "inquirer": "^7.0.0",
+    "jquery": "^3.4.1",
+    "jsdom": "^15.1.1",
+    "mongoose": "^5.7.0",
+    "solc": "^0.5.11",
+    "web3": "^1.2.1",
+    "web3-core-requestmanager": "^1.2.1"
   },
   "devDependencies": {
-    "gulp": "^3.9.1"
+    "gulp": "^4.0.2"
   },
   "repository": "https://github.com/ConsenSys/bytecode-verifier",
   "private": null
