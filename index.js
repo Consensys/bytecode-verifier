@@ -41,6 +41,25 @@ const compiler_question = [
     message: 'Enter the major released version. (e.g. 0.4.10, 0.3.8 etc.)'
   }
 ]
+const customRPC_question = [
+  {
+    type: 'input',
+    name: 'nes_rpc_url',
+    message: 'Enter the New RPC URL. (e.g. http://localhost:3030 etc.)'
+  }
+]
+
+function handleVerifierQuestions(provider) {
+  return prompt(verifier_question)
+    .then((answers) => {
+      answers['file_folder'] = process.cwd();
+      verifier(answers, provider);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+}
+
 program
   .version('0.2.1')
   .description('=========  Ethereum Bytecode Verifier  ==========='+'\n'+
@@ -65,23 +84,20 @@ program
         'ropsten': 'https://ropsten.infura.io',
         'kovan': 'https://kovan.infura.io',
         'rinkeby': 'https://rinkeby.infura.io',
+        'smartbch': 'https://smartbch.greyh.at'
       }
       
       if (chainChoice == 'mainnet' || chainChoice == 'ropsten'
-        || chainChoice=='kovan' || chainChoice== 'rinkeby'){
-        
-        var provider = net_to_provider[chainChoice];
+        || chainChoice =='kovan' || chainChoice == 'rinkeby' || chainChoice == 'smartbch'){
         // After confirming the chain choice, prompt question. 
-        prompt(verifier_question)
-          .then( (answers) =>{
-          answers['file_folder'] = process.cwd();
-          verifier(answers, provider);
-        })
-          .catch(err => {
-            console.log(err);
-          });
-      }
-      else{
+        handleVerifierQuestions(net_to_provider[chainChoice])
+      } else if (chainChoice == 'custom') {
+        prompt(customRPC_question)
+        .then((provider)=>handleVerifierQuestions(provider))
+        .catch(err=>{
+          console.log(err);
+        });
+      } else{
         console.log(chalk.red.bold('Invalid chain choice')+' Your current choice is by default: mainchain');
         console.log(chalk.green.bold('Please choose from: ')+chalk.underline('mainnet')+' , '+chalk.underline('ropsten')+' , '+
         chalk.underline('kovan')+' , '+chalk.underline('rinkeby'));
